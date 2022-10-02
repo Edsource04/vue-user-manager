@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bankend", "Bankend\Bankend.csproj", "{EB75EF1D-2112-4127-93B7-D90940D223FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{C9647FD5-A806-4819-9E34-36DF48CA5190}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB75EF1D-2112-4127-93B7-D90940D223FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB75EF1D-2112-4127-93B7-D90940D223FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB75EF1D-2112-4127-93B7-D90940D223FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB75EF1D-2112-4127-93B7-D90940D223FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9647FD5-A806-4819-9E34-36DF48CA5190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9647FD5-A806-4819-9E34-36DF48CA5190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9647FD5-A806-4819-9E34-36DF48CA5190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9647FD5-A806-4819-9E34-36DF48CA5190}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6A8324F-E7F1-44BC-8774-5A4640C0B367}
+	EndGlobalSection
+EndGlobal
