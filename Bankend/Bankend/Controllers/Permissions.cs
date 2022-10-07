@@ -12,17 +12,17 @@ namespace Bankend.Controllers
     public class Permissions : ControllerBase
     {
 
-        private readonly ILogger<PermissionType> _logger;
+        private readonly ILogger<Permissions> _logger;
         private readonly IPermissionService service;
 
-        public Permissions(ILogger<PermissionType> logger, IPermissionService serviceContext)
+        public Permissions(ILogger<Permissions> logger, IPermissionService serviceContext)
         {
             _logger = logger;
             service = serviceContext;
         }
 
         [HttpGet(Name = "Permissions")]
-        public ActionResult<IEnumerable<PermissionTypeViewModel>> Get()
+        public ActionResult<IEnumerable<PermissionViewModel>> Get()
         {
             return Ok(service.GetPermissions());
         }
@@ -34,11 +34,11 @@ namespace Bankend.Controllers
         }
 
         [HttpPost()]
-        public  ActionResult<PermissionTypeViewModel> Post([FromBody] CreatePermissionViewModel permissionTypeForCreation)
+        public  PermissionViewModel Post([FromBody] CreatePermissionViewModel permissionForCreation)
         {
-            var permissionType = service.CreatePermission(permissionTypeForCreation);
+            var permissionVM = service.CreatePermission(permissionForCreation);
 
-            return CreatedAtAction(nameof(Get), new { id = permissionType.Id }, permissionType);
+            return permissionVM;
         }
 
         [HttpPut("{id}")]
@@ -47,22 +47,30 @@ namespace Bankend.Controllers
             var perType = service.GetPermissionById(id);
             if (perType == null) return NotFound();
 
-            UpdatePermissionViewModel toUpdate = new UpdatePermissionViewModel
+            if (permission.PermissionType is not null)
             {
-                Id = id,
-                ViewModel = new CreatePermissionViewModel { 
+                UpdatePermissionViewModel toUpdate = new UpdatePermissionViewModel
+                {
+                    Id = id,
                     EmployeeName = permission.EmployeeName,
                     EmployeeLastName = permission.EmployeeLastName,
-                    Date = permission.Date,
-                    PermissionType = permission.PermissionType
+                    PermissionTypeId = permission.PermissionType.Id,
+                    Date = permission.Date
+
+                };
+
+                if (service.UpdatePermission(toUpdate))
+                {
+                    return NoContent();
                 }
-            };
-            if (service.UpdatePermission(toUpdate))
-            {
-                return NoContent();
+                else
+                    return BadRequest();
             }
             else
                 return BadRequest();
+            
+           
+           
         }
 
         [HttpDelete("{id}")]

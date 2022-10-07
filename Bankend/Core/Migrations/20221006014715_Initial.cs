@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Core.Migrations
 {
-    public partial class InitiaMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,8 +30,8 @@ namespace Core.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployeeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmployeeLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PermissionTypeId = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PermissionTypeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,8 +40,7 @@ namespace Core.Migrations
                         name: "FK_Permissions_PermissionTypes_PermissionTypeId",
                         column: x => x.PermissionTypeId,
                         principalTable: "PermissionTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

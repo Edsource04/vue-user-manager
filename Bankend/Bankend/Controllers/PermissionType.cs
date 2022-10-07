@@ -22,9 +22,9 @@ namespace Bankend.Controllers
         }
 
         [HttpGet(Name = "PermissionTypes")]
-        public ActionResult<IEnumerable<PermissionTypeViewModel>> Get()
+        public IEnumerable<PermissionTypeViewModel> Get()
         {
-            return Ok(service.GetPermissionTypes());
+            return service.GetPermissionTypes();
         }
 
         [HttpGet("{id}")]
@@ -34,15 +34,15 @@ namespace Bankend.Controllers
         }
 
         [HttpPost()]
-        public  ActionResult<PermissionTypeViewModel> Post([FromBody] CreatePermissionTypeViewModel permissionTypeForCreation)
+        public  PermissionTypeViewModel Post([FromBody] CreatePermissionTypeViewModel permissionTypeForCreation)
         {
             var permissionType = service.CreatePermissionType(permissionTypeForCreation);
 
-            return CreatedAtAction(nameof(Get), new { id = permissionType.Id }, permissionType);
+            return permissionType;
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, PermissionTypeViewModel permissionType)
+        public IActionResult Put(int id, [FromBody] PermissionTypeViewModel permissionType)
         {
             var perType = service.GetPermissionTypeById(id);
             if (perType == null) return NotFound();
@@ -50,7 +50,7 @@ namespace Bankend.Controllers
             UpdatePermissionTypeViewModel toUpdate = new UpdatePermissionTypeViewModel
             {
                 Id = id,
-                createPermissionType = new CreatePermissionTypeViewModel { Description = permissionType.Description }
+                Description = permissionType.Description 
             };
             if (service.UpdatePermissionType(toUpdate))
             {

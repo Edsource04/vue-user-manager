@@ -21,12 +21,16 @@ namespace Core.Services
 
         public PermissionTypeViewModel CreatePermissionType(CreatePermissionTypeViewModel viewModel)
         {
-            PermissionType permission = new PermissionType();
-            permission.Description = viewModel.Description;
-            userManager.PermissionTypes?.Add(permission);
+            var permissionType = new PermissionType();
+            permissionType.Description = viewModel.Description;
+            userManager.PermissionTypes?.Add(permissionType);
             userManager.SaveChanges();
 
-            return new PermissionTypeViewModel(permission.Id, permission.Description);
+            return new PermissionTypeViewModel
+            {
+                Id = permissionType.Id,
+                Description = permissionType.Description
+            };
         }
 
         public PermissionViewModel CreatePermission(CreatePermissionViewModel viewModel)
@@ -34,7 +38,11 @@ namespace Core.Services
             Permission permission = new Permission();
             permission.EmployeeName = viewModel.EmployeeName;
             permission.EmployeeLastName = viewModel.EmployeeLastName;
-            permission.PermissionType = viewModel.PermissionType;
+
+            var permissionType = userManager.PermissionTypes?.FirstOrDefault(c => c.Id == viewModel.PermissionTypeId);
+            
+            if (permissionType != null)
+                permission.PermissionType = permissionType;
 
             userManager.Permissions?.Add(permission);
             userManager.SaveChanges();
@@ -43,7 +51,7 @@ namespace Core.Services
             {
                 EmployeeName = permission.EmployeeName,
                 EmployeeLastName = permission.EmployeeLastName,
-                PermissionType = permission.PermissionType,
+                PermissionType = new PermissionTypeViewModel { Id = permission.PermissionType.Id, Description = permission.PermissionType.Description},
                 Date = permission.Date
             };
         }
@@ -56,15 +64,11 @@ namespace Core.Services
                 return false;
 
 
-            if (viewModel.createPermissionType is not null)
-            {
-             permissionType.Description = viewModel.createPermissionType.Description;
+             permissionType.Description = viewModel.Description;
              userManager.Entry<PermissionType>(permissionType).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 userManager.SaveChanges();
-                return true;
-            }
-
-            return false;
+                
+           return true;
         }
 
         public bool UpdatePermission(UpdatePermissionViewModel viewModel)
@@ -74,21 +78,20 @@ namespace Core.Services
             if (permission is null)
                 return false;
 
-            if (viewModel.ViewModel is not null)
-            {
-                permission.EmployeeName = viewModel.ViewModel.EmployeeName; 
-                permission.EmployeeLastName= viewModel.ViewModel.EmployeeLastName;
-                permission.PermissionType = viewModel.ViewModel.PermissionType;
-                permission.Date = viewModel.ViewModel.Date;
+
+                permission.EmployeeName = viewModel.EmployeeName; 
+                permission.EmployeeLastName= viewModel.EmployeeLastName;
+                permission.Date = viewModel.Date;
+                var permissionType = userManager.PermissionTypes?.FirstOrDefault(c => c.Id == viewModel.PermissionTypeId);
+                if (permissionType is not null)
+                {
+                    permission.PermissionType = permissionType;
+                }
 
                 userManager.Entry<Permission>(permission).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 userManager.SaveChanges();
 
                 return true;
-            }
-
-            return false;
-
 
 
         }
@@ -143,11 +146,13 @@ namespace Core.Services
 
             if (userManager.Permissions is not null)
             {
-                var permissions = userManager.Permissions.Include("PermissionType").ToList();
+                var permissions = userManager.Permissions.Include(pt => pt.PermissionType).IgnoreAutoIncludes().ToList();
+                
                 foreach(Permission p in permissions)
                 {
                     PermissionViewModel permissions1 = new PermissionViewModel(p.Id);
-                    permissions1.PermissionType = p.PermissionType;
+                    if (p.PermissionType is not null)
+                        permissions1.PermissionType = new PermissionTypeViewModel { Id = p.PermissionType.Id, Description = p.PermissionType.Description };
                     permissions1.EmployeeLastName = p.EmployeeLastName;
                     permissions1.EmployeeName = p.EmployeeName;
                     permissions1.Date = p.Date;
@@ -166,7 +171,7 @@ namespace Core.Services
                 var permissionTypes = userManager.PermissionTypes.ToList();
                 foreach(PermissionType pt in permissionTypes)
                 {
-                    permissionTypesVM.Add(new PermissionTypeViewModel(pt.Id, pt.Description));
+                    permissionTypesVM.Add(new PermissionTypeViewModel { Id = pt.Id, Description = pt.Description});
                 }          
             }
 
@@ -181,7 +186,7 @@ namespace Core.Services
             {
                 var permissionType = userManager.PermissionTypes.Find(Id);
                 if (permissionType != null)
-                    return new PermissionTypeViewModel(permissionType.Id, permissionType.Description);
+                    return new PermissionTypeViewModel { Id = permissionType.Id, Description = permissionType.Description};
                 else
                     return new PermissionTypeViewModel();
             }
@@ -196,14 +201,14 @@ namespace Core.Services
             if (userManager.Permissions is not null)
             {
                 var permission = userManager.Permissions.Include("PermissionType").FirstOrDefault(x => x.Id == Id);
-                if (permission != null)
+                if (permission != null && permission.PermissionType != null)
                 {
                     PermissionViewModel per = new PermissionViewModel(permission.Id)
                     {
                         EmployeeLastName = permission.EmployeeLastName,
                         Date = permission.Date,
                         EmployeeName = permission.EmployeeName,
-                        PermissionType = permission.PermissionType
+                        PermissionType = new PermissionTypeViewModel { Id = permission.PermissionType.Id, Description = permission.PermissionType.Description},
                     };
                     return per;
                 }

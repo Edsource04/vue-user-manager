@@ -61,3 +61,4 @@ C:\Users\erivera\Desktop\Edgar\Vue\vue-user-manager\Bankend\Bankend\obj\Debug\ne
 C:\Users\erivera\Desktop\Edgar\Vue\vue-user-manager\Bankend\Bankend\obj\Debug\net6.0\Bankend.pdb
 C:\Users\erivera\Desktop\Edgar\Vue\vue-user-manager\Bankend\Bankend\obj\Debug\net6.0\Bankend.genruntimeconfig.cache
 C:\Users\erivera\Desktop\Edgar\Vue\vue-user-manager\Bankend\Bankend\obj\Debug\net6.0\ref\Bankend.dll
+C:\Users\erivera\Desktop\Edgar\Vue\vue-user-manager\Bankend\Bankend\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll

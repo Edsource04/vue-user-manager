@@ -14,7 +14,7 @@ namespace Core.Mappings
         public void Configure(EntityTypeBuilder<Permission> builder)
         {
             builder.HasKey(p => p.Id);
-            builder.HasOne(p => p.PermissionType);
+            builder.HasOne(p => p.PermissionType).WithMany(pt => pt.Permissions);
         }
     }
 }

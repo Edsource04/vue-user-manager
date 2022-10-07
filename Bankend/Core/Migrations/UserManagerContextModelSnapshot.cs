@@ -41,7 +41,7 @@ namespace Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PermissionTypeId")
+                    b.Property<int?>("PermissionTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -71,12 +71,15 @@ namespace Core.Migrations
             modelBuilder.Entity("Core.Entities.Permission", b =>
                 {
                     b.HasOne("Core.Entities.PermissionType", "PermissionType")
-                        .WithMany()
-                        .HasForeignKey("PermissionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Permissions")
+                        .HasForeignKey("PermissionTypeId");
 
                     b.Navigation("PermissionType");
+                });
+
+            modelBuilder.Entity("Core.Entities.PermissionType", b =>
+                {
+                    b.Navigation("Permissions");
                 });
 #pragma warning restore 612, 618
         }

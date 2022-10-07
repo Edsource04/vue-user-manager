@@ -2,14 +2,21 @@ using Core.Context;
 using Core.Interface;
 using Core.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile($"appsettings.json");
+
+var config = configuration.Build();
+var connectionString = config.GetConnectionString("UserManagerDatabase");
 
 builder.Services.AddDbContext<UserManagerContext>(options =>
 {
-    options.UseSqlServer(@"Server=MDA-305;Database=UserManagerDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
+    options.UseSqlServer(connectionString);
 });
 
 builder.Services.AddScoped<IPermissionService, PermissionService>();
@@ -27,7 +34,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(jo => jo.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

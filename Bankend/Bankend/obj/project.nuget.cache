@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1/6/n2CTBfpAXa2ev9jpv9+uQ+i/zNYIhx2IQsUD8AWlZyHFk9Sq6yrn9SACzpIyAyhJwgzms69/xE81/C+ZNQ==",
+  "dgSpecHash": "HYDcJXTfi3Xh5TTrsIV7ckjiU8xOfGPlb5rIzm68mZfkOBpE9a7GiGLBtEW1yJoZKXLMICPmmxZw26002AFFTQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\erivera\\Desktop\\Edgar\\Vue\\vue-user-manager\\Bankend\\Bankend\\Bankend.csproj",
   "expectedPackageFiles": [
@@ -18,6 +18,7 @@
     "C:\\Users\\erivera\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\erivera\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\erivera\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.1\\microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
+    "C:\\Users\\erivera\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.1\\microsoft.extensions.configuration.6.0.1.nupkg.sha512",
     "C:\\Users\\erivera\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\erivera\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\6.0.0\\microsoft.extensions.dependencyinjection.6.0.0.nupkg.sha512",
     "C:\\Users\\erivera\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",

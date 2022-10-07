@@ -11,7 +11,7 @@ namespace Core.ViewModels
     {
         public string EmployeeName { get; set; } = string.Empty;
         public string EmployeeLastName { get; set; } = string.Empty;
-        public PermissionType PermissionType { get; set; } = new PermissionType();
+        public int PermissionTypeId { get; set; }
         public DateTime Date { get; set; } = DateTime.Today;
     }
 }
