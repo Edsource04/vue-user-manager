@@ -43,15 +43,26 @@ namespace Core.Services
             
             if (permissionType != null)
                 permission.PermissionType = permissionType;
+                else
+                permissionType = new PermissionType();
 
             userManager.Permissions?.Add(permission);
             userManager.SaveChanges();
 
+            if(permission.PermissionType is not null)
             return new PermissionViewModel(permission.Id)
             {
                 EmployeeName = permission.EmployeeName,
                 EmployeeLastName = permission.EmployeeLastName,
                 PermissionType = new PermissionTypeViewModel { Id = permission.PermissionType.Id, Description = permission.PermissionType.Description},
+                Date = permission.Date
+            };
+            else return 
+             new PermissionViewModel(permission.Id)
+            {
+                EmployeeName = permission.EmployeeName,
+                EmployeeLastName = permission.EmployeeLastName,
+                PermissionType = new PermissionTypeViewModel { Id = 0, Description = ""},
                 Date = permission.Date
             };
         }
